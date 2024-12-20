@@ -1,0 +1,30 @@
+const int button1Pin = D2;  // GPIO4 (D2 on NodeMCU) for Button 1
+const int button2Pin = D1;  // GPIO5 (D1 on NodeMCU) for Button 2
+
+int button1State = 0;       // Variable to store the state of Button 1
+int button2State = 0;       // Variable to store the state of Button 2
+
+void setup() {
+  Serial.begin(115200);     // Start the serial communication
+  pinMode(button1Pin, INPUT_PULLUP); // Set Button 1 pin as input with internal pull-up resistor
+  pinMode(button2Pin, INPUT_PULLUP); // Set Button 2 pin as input with internal pull-up resistor
+}
+
+void loop() {
+  // Read the state of both buttons
+  button1State = digitalRead(button1Pin); 
+  button2State = digitalRead(button2Pin);
+
+  // Convert the readings to 1 (pressed) or 0 (not pressed)
+  int button1Value = (button1State == LOW) ? 1 : 0;
+  int button2Value = (button2State == LOW) ? 1 : 0;
+
+  // Send the state of both buttons in the format (button1, button2)
+  Serial.print("(");
+  Serial.print(button1Value);
+  Serial.print(", ");
+  Serial.print(button2Value);
+  Serial.println(")");
+
+  delay(100); // Small delay to prevent flooding the serial monitor
+}
